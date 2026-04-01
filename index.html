@@ -130,6 +130,11 @@ body{font-family:'Noto Sans',system-ui,sans-serif;background:var(--gray-bg);colo
 .sess-btn.danger{border-color:#fca5a5;color:#dc2626}
 .sess-btn.danger:hover{background:#fef2f2}
 .sess-btn.info{border-color:#93c5fd;color:#1d4ed8}
+.feat-toggle-wrap{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.feat-toggle-btn{display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:8px;border:1.5px solid #d1d5db;background:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:#374151;transition:all .15s}
+.feat-toggle-btn:hover{background:#f9fafb;border-color:#9ca3af}
+.feat-toggle-btn.active{background:#003CA5;border-color:#003CA5;color:#fff}
+.feat-toggle-btn .tog-dot{width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.7}
 .sess-clock{font-size:11px;color:#6b7280;margin-left:auto}
 
 /* DEBUG BAR */
@@ -169,6 +174,14 @@ body{font-family:'Noto Sans',system-ui,sans-serif;background:var(--gray-bg);colo
 .ai-tag{display:flex;align-items:center;gap:3px;font-size:12px;font-weight:500;color:#525b6c;position:relative}
 .ai-plus{position:absolute;top:-3px;right:-8px;width:9px;height:9px}
 .nct{font-size:12px;font-weight:500;color:#525b6c}
+
+/* FEATURED HEADER — single unified row */
+.feat-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:10px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:7px 12px}
+.feat-notice{display:flex;align-items:center;gap:6px;font-size:11px;color:#6b7280;line-height:1.4;flex:1}
+.feat-notice svg{flex-shrink:0;opacity:.6}
+.feat-see-all{font-size:12px;font-weight:600;color:#003CA5;background:#fff;border:1px solid #bfdbfe;border-radius:6px;padding:4px 12px;cursor:pointer;white-space:nowrap;transition:background .15s;font-family:inherit;flex-shrink:0}
+.feat-see-all:hover{background:#eff6ff}
+
 .sep{display:flex;align-items:center;gap:8px;margin:12px 0 6px;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#9ca3af}
 .sep::after{content:'';flex:1;height:1px;background:var(--gray-border)}
 .empty{text-align:center;padding:3rem 1rem;color:var(--gray-muted);font-size:14px}
@@ -360,6 +373,7 @@ body{font-family:'Noto Sans',system-ui,sans-serif;background:var(--gray-bg);colo
         <span class="sess-ctrl-label">Demo controls:</span>
         <button class="sess-btn info" onclick="forceNewSession()">↻ New session</button>
         <button class="sess-btn danger" onclick="simulateExpiry()">⏱ Simulate 48h expiry</button>
+        <button class="sess-btn" id="featToggleBtn" onclick="toggleFeatVisible()">★ Featured: On</button>
         <div class="sess-clock" id="sessClock">—</div>
       </div>
     </div>
@@ -474,6 +488,8 @@ const KEY_TS  = 'wt_feat_ts';
 
 // ── IN-MEMORY STATE ───────────────────────────────────────────────────────────
 let curFeatured = [];  // current session-locked selection (study objects)
+let featExpanded = false; // whether user has clicked 'see all featured'
+let featVisible  = true;  // whether featured section is shown at all
 let ctxKey      = '';  // last rendered context key (for change detection)
 let sessionLog  = [];  // event log entries for the demo panel
 let isFirst     = true;// suppress toasts/logs on the very first render
@@ -684,6 +700,7 @@ function forceNewSession() {
   // Clear storage and in-memory state — simulates 48h expiry for demo
   _lsDel(KEY_IDS); _lsDel(KEY_TS); _memIds = null; _memTs = null;
   curFeatured = [];
+  featExpanded = false;
   ctxKey = '';
   document.getElementById('searchInput').value = '';
   document.getElementById('conditionFilter').value = '';
@@ -853,28 +870,94 @@ function applyFilters() {
   isFirst = false;
   updateClock();
 
-  const ftIds = new Set(ftShown.map(s => s.id));
-  const rest  = matched.filter(s => !ftIds.has(s.id));
-  const total = ftShown.length + rest.length;
+  // ── WHAT TO SHOW ────────────────────────────────────────────────────────────
+  // DEFAULT state:
+  //   collapsed → show curFeatured (5 locked) + "See all X" button
+  //   expanded  → show ALL featured in pool + "Show fewer" button
+  // FILTERED state:
+  //   filter has priority → show ALL matching featured, no toggle, no cap
 
-  renderDots(ftShown.length, featPool.length, defState);
+  let visibleFeatured;
+  if (!featVisible) {
+    // Featured hidden — show no featured studies at all
+    visibleFeatured = [];
+  } else if (defState) {
+    visibleFeatured = featExpanded ? featPool : curFeatured;
+  } else {
+    // filter active — show ALL featured matching the filter
+    visibleFeatured = featPool;
+  }
+
+  const hiddenCount = featVisible && defState && !featExpanded
+    ? Math.max(0, featPool.length - curFeatured.length) : 0;
+
+  // rest = all matched non-featured studies
+  // when featVisible=false, featured studies drop into normal results
+  const featIds = new Set(featPool.map(s => s.id));
+  const rest = featVisible
+    ? matched.filter(s => !featIds.has(s.id))
+    : matched; // show everything including featured in normal flow
+  const displayTotal = visibleFeatured.length + rest.length;
+
+  renderDots(visibleFeatured.length, featPool.length, defState);
 
   // Debug bar
   const af = [q?`Search:"${q}"`:null,cq?`Cond:"${cq}"`:null,types.length?`Type:${types.join(',')}`:null,stats.length?`Status:${stats.join(',')}`:null,phases.length?`Phase:${phases.join(',')}`:null,ages.length?`Age:${ages.join(',')}`:null].filter(Boolean);
   const modeTag = defState
-    ? `<span style="background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:4px;font-weight:700">Default — ${ftShown.length} locked for 48h</span>`
-    : `<span style="background:#faf5ff;color:#7c3aed;padding:2px 8px;border-radius:4px;font-weight:700">Filtered — all ${ftShown.length} matching</span>`;
+    ? `<span style="background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:4px;font-weight:700">Default — ${curFeatured.length} locked for 48h</span>`
+    : `<span style="background:#faf5ff;color:#7c3aed;padding:2px 8px;border-radius:4px;font-weight:700">Filtered — all ${featPool.length} matching featured shown</span>`;
   document.getElementById('dbg').innerHTML = `${modeTag}${af.length ? ' &nbsp;|&nbsp; ' + af.join(' · ') : ''}`;
-  document.getElementById('resInfo').innerHTML = `Showing <strong>1</strong> to <strong>${Math.min(total,10)}</strong> of <strong>${total} Studies</strong>`;
-  document.getElementById('pagInfo').innerHTML = `<strong>1</strong> to <strong>${Math.min(total,10)}</strong> of <strong>${total} Studies</strong>`;
-  document.getElementById('lastPg').textContent = Math.max(1, Math.ceil(total / 10));
+  // Update toggle button appearance
+  const ftBtn = document.getElementById('featToggleBtn');
+  if (ftBtn) {
+    ftBtn.textContent = featVisible ? '★ Featured: On' : '★ Featured: Off';
+    ftBtn.style.color = featVisible ? '#003CA5' : '#6b7280';
+    ftBtn.style.borderColor = featVisible ? '#93c5fd' : '#d1d5db';
+  }
+  document.getElementById('resInfo').innerHTML = `Showing <strong>1</strong> to <strong>${Math.min(displayTotal,10)}</strong> of <strong>${displayTotal} Studies</strong>`;
+  document.getElementById('pagInfo').innerHTML = `<strong>1</strong> to <strong>${Math.min(displayTotal,10)}</strong> of <strong>${displayTotal} Studies</strong>`;
+  document.getElementById('lastPg').textContent = Math.max(1, Math.ceil(displayTotal / 10));
 
-  let html = '';
-  ftShown.forEach(s => { html += cardHTML(s, true); });
-  if (ftShown.length && rest.length) html += `<div class="sep">All studies</div>`;
+  // ── ROTATION NOTICE + TOGGLE BUTTON ────────────────────────────────────────
+  // Hidden entirely when there are no featured studies to show
+  let rotationNotice = '';
+  if (visibleFeatured.length > 0) {
+    let toggleBtn = '';
+    if (defState && hiddenCount > 0) {
+      toggleBtn = `<button class="feat-see-all" onclick="toggleFeatured()">See all ${featPool.length} featured studies</button>`;
+    } else if (defState && featExpanded && featPool.length > curFeatured.length) {
+      toggleBtn = `<button class="feat-see-all" onclick="toggleFeatured()">Show fewer</button>`;
+    }
+    rotationNotice = `
+    <div class="feat-hdr">
+      <div class="feat-notice">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4C7.58 4 4 7.58 4 12S7.58 20 12 20C15.73 20 18.84 17.45 19.73 14H17.65C16.83 16.33 14.61 18 12 18C8.69 18 6 15.31 6 12S8.69 6 12 6C13.66 6 15.14 6.69 16.22 7.78L13 11H20V4L17.65 6.35Z" fill="currentColor"/></svg>
+        Featured studies are selected from our sponsor pool and rotate periodically
+      </div>
+      ${toggleBtn}
+    </div>`;
+  }
+
+  // ── BUILD HTML ──────────────────────────────────────────────────────────────
+  let html = rotationNotice;
+  visibleFeatured.forEach(s => { html += cardHTML(s, true); });
+  if (visibleFeatured.length && rest.length) html += `<div class="sep">All studies</div>`;
   rest.forEach(s => { html += cardHTML(s, false); });
-  if (!total) html = `<div class="empty">No studies match your filters.<br><small style="margin-top:5px;display:block;color:#9ca3af">Try broadening your search.</small></div>`;
+  if (!displayTotal) html = `<div class="empty">No studies match your filters.<br><small style="margin-top:5px;display:block;color:#9ca3af">Try broadening your search.</small></div>`;
   document.getElementById('cardList').innerHTML = html;
+}
+
+
+// ── FEATURED EXPAND TOGGLE ────────────────────────────────────────────────────
+function toggleFeatured() {
+  featExpanded = !featExpanded;
+  applyFilters();
+}
+
+// ── FEATURED VISIBILITY TOGGLE ────────────────────────────────────────────────
+function toggleFeatVisible() {
+  featVisible = !featVisible;
+  applyFilters();
 }
 
 // ── CLEAR ALL ─────────────────────────────────────────────────────────────────
@@ -885,6 +968,7 @@ function clearAll() {
   document.getElementById('conditionFilter').value = '';
   document.querySelectorAll('.fp input[type=checkbox]').forEach(x => x.checked = false);
   document.querySelectorAll('.fp input[type=radio]').forEach(x => x.checked = x.value === 'all');
+  featExpanded = false;
   ctxKey = '__cleared__'; // force re-eval
   applyFilters();
 }
