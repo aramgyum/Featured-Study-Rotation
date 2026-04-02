@@ -15,7 +15,7 @@
   --gray-bg:#f0f2f5;--gray-border:#e5e7eb;--gray-text:#374151;--gray-muted:#6b7280;
   --white:#fff;--black:#09090b;--radius:10px;--shadow:0 1px 3px rgba(0,0,0,.08);
 }
-body{font-family:'Noto Sans',system-ui,sans-serif;background:var(--gray-bg);color:var(--black);font-size:14px;min-height:100vh}
+body{font-family:'Noto Sans',system-ui,sans-serif;background:var(--gray-bg);color:var(--black);font-size:14px;min-height:100vh;margin:0}
 
 /* ANN BAR */
 .ann-bar{background:var(--teal);padding:7px 20px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:500}
@@ -23,12 +23,12 @@ body{font-family:'Noto Sans',system-ui,sans-serif;background:var(--gray-bg);colo
 .ann-bar .x{background:none;border:none;cursor:pointer;font-size:16px;margin-left:auto;line-height:1}
 
 /* HEADER */
-.header{background:#fff;padding:10px 20px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--gray-border)}
-.sf-pill{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#f5f5f5;border-radius:999px;padding:7px 14px;min-width:185px;cursor:pointer}
+.header{background:#fff;border-bottom:1px solid var(--gray-border);display:flex;align-items:center;gap:14px;padding:10px 20px;box-sizing:border-box;width:100%}
+.sf-pill{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#f5f5f5;border-radius:999px;padding:7px 14px;width:215px;flex-shrink:0;cursor:pointer;box-sizing:border-box}
 .sf-pill-l{display:flex;align-items:center;gap:8px}
 .sf-icon{background:#fff;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .sf-name{font-size:15px;font-weight:700}
-.search-wrap{flex:1;position:relative}
+.search-wrap{flex:1;position:relative;margin-left:4px}
 .srch{width:100%;height:44px;border:1px solid var(--gray-border);border-radius:999px;padding:0 56px 0 40px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s,box-shadow .2s}
 .srch:focus{border-color:var(--blue-mid);box-shadow:0 0 0 3px rgba(29,78,216,.12)}
 .srch::placeholder{color:#b0b7c3}
@@ -37,7 +37,7 @@ body{font-family:'Noto Sans',system-ui,sans-serif;background:var(--gray-bg);colo
 .srch-btn:hover{background:#93c5fd}
 
 /* LAYOUT */
-.layout{display:flex;align-items:flex-start;max-width:1300px;margin:0 auto;padding:16px 20px;gap:0}
+.layout{display:flex;align-items:flex-start;padding:16px 20px;gap:0;width:100%;box-sizing:border-box}
 
 /* FILTER PANEL */
 .fp{width:215px;flex-shrink:0;background:#fff;border:1px solid var(--gray-border);border-radius:var(--radius);padding:14px;position:sticky;top:14px;max-height:calc(100vh - 28px);overflow-y:auto}
@@ -53,7 +53,28 @@ body{font-family:'Noto Sans',system-ui,sans-serif;background:var(--gray-bg);colo
 .fi::placeholder{color:#b0b7c3}
 .cl{display:flex;flex-direction:column;gap:4px}
 .cr{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--gray-text);cursor:pointer}
-.cr input{width:14px;height:14px;accent-color:var(--blue-mid);cursor:pointer;flex-shrink:0}
+.cr input[type=checkbox],.cr input[type=radio]{
+  width:15px;height:15px;cursor:pointer;flex-shrink:0;
+  appearance:none;-webkit-appearance:none;
+  border:1.5px solid #d1d5db;border-radius:3px;background:#fff;
+  display:grid;place-content:center;transition:border-color .15s,background .15s;
+  margin:0;
+}
+.cr input[type=radio]{border-radius:50%}
+.cr input[type=checkbox]:checked,.cr input[type=radio]:checked{
+  background:var(--blue-mid);border-color:var(--blue-mid);
+}
+.cr input[type=checkbox]:checked::after{
+  content:'';width:4px;height:7px;
+  border:1.5px solid #fff;border-top:none;border-left:none;
+  transform:rotate(45deg) translateY(-1px);display:block;
+}
+.cr input[type=radio]:checked::after{
+  content:'';width:6px;height:6px;border-radius:50%;background:#fff;display:block;
+}
+.cr input[type=checkbox]:hover:not(:checked),.cr input[type=radio]:hover:not(:checked){
+  border-color:#9ca3af;
+}
 .hdiv{border:none;border-top:1px solid var(--gray-border);margin:10px 0}
 .fa{display:flex;gap:7px;margin-top:10px}
 .btn-c{flex:1;padding:8px;border:1px solid var(--gray-border);border-radius:8px;background:#fff;font-size:13px;font-weight:500;color:var(--gray-text);cursor:pointer;font-family:inherit}
@@ -62,7 +83,7 @@ body{font-family:'Noto Sans',system-ui,sans-serif;background:var(--gray-bg);colo
 .btn-a:hover{background:#93c5fd}
 
 /* MAIN */
-.main{flex:1;min-width:0;padding-left:18px}
+.main{flex:1;min-width:0;padding-left:18px;width:100%}
 
 /* ── SESSION CHANGE DISPLAY ─────────────── */
 
@@ -81,7 +102,6 @@ body{font-family:'Noto Sans',system-ui,sans-serif;background:var(--gray-bg);colo
 @keyframes tOut{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(36px)}}
 
 /* SESSION STATUS BAR */
-.sess-bar{background:#fff;border:1px solid var(--gray-border);border-radius:var(--radius);padding:10px 14px;margin-bottom:10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .sess-status{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:600;transition:all .3s}
 .sess-status.reshuffled{background:#faf5ff;color:#7c3aed;border:1.5px solid #ddd6fe;animation:glow 1.4s ease 2}
 .sess-status.stable{background:#f0fdf4;color:#16a34a;border:1.5px solid #bbf7d0}
@@ -98,7 +118,6 @@ body{font-family:'Noto Sans',system-ui,sans-serif;background:var(--gray-bg);colo
 .dots-lbl strong{color:var(--gray-text)}
 
 /* SESSION LOG */
-.log-panel{background:#fff;border:1px solid var(--gray-border);border-radius:var(--radius);padding:10px 12px;margin-bottom:10px}
 .log-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
 .log-title{font-size:12px;font-weight:700;color:var(--gray-text);display:flex;align-items:center;gap:5px}
 .log-clr{font-size:11px;color:var(--gray-muted);background:none;border:none;cursor:pointer;padding:0}
@@ -123,7 +142,6 @@ body{font-family:'Noto Sans',system-ui,sans-serif;background:var(--gray-bg);colo
 .sess-status.restored{background:#f0fdf4;color:#16a34a;border:1.5px solid #bbf7d0}
 .sess-status.expired{background:#fffbeb;color:#b45309;border:1.5px solid #fde68a;animation:glow-amber 1.4s ease 2}
 @keyframes glow-amber{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,0)}50%{box-shadow:0 0 0 6px rgba(245,158,11,.18)}}
-.sess-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 14px;background:#f9fafb;border-radius:8px;font-size:11px;margin-top:6px}
 .sess-ctrl-label{color:#6b7280;font-weight:600}
 .sess-btn{padding:3px 10px;border-radius:6px;border:1px solid #d1d5db;background:#fff;font-size:11px;cursor:pointer;font-family:inherit;transition:background .15s}
 .sess-btn:hover{background:#f3f4f6}
@@ -138,8 +156,6 @@ body{font-family:'Noto Sans',system-ui,sans-serif;background:var(--gray-bg);colo
 .sess-clock{font-size:11px;color:#6b7280;margin-left:auto}
 
 /* DEBUG BAR */
-.dbg{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:8px 12px;font-size:11px;color:#1d4ed8;margin-bottom:8px;line-height:1.8}
-.dbg strong{color:#1e3a8a}
 
 /* RESULTS */
 .res-info{font-size:14px;color:var(--gray-text);margin-bottom:10px}
@@ -204,32 +220,63 @@ body{font-family:'Noto Sans',system-ui,sans-serif;background:var(--gray-bg);colo
 
 
 /* SESSION DEFINITION CALLOUT */
-.sess-def{background:#fff;border:1px solid #bfdbfe;border-left:4px solid #3b82f6;border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;font-size:12px;line-height:1.7;color:var(--gray-text)}
-.sess-def-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.sess-def-title{font-size:13px;font-weight:700;color:#1d4ed8;display:flex;align-items:center;gap:6px}
-.sess-toggle{font-size:11px;color:var(--gray-muted);background:none;border:none;cursor:pointer;padding:0;text-decoration:underline}
-.sess-def-body{display:flex;gap:14px;flex-wrap:wrap}
-.sess-def-col{flex:1;min-width:180px}
-.sess-def-col-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#374151;margin-bottom:4px;display:flex;align-items:center;gap:4px}
-.sdc-blue{color:#0369a1}
-.sdc-purple{color:#7c3aed}
-.sess-def ul{padding-left:14px;font-size:11px;color:var(--gray-muted);line-height:1.8}
-.sess-def ul li strong{color:var(--gray-text)}
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:3px}
+
+/* ── DEV FAB — bottom left floating panel ─────────────────────────────── */
+.fab-wrap{position:fixed;bottom:24px;left:24px;z-index:9999;font-family:'Noto Sans',system-ui,sans-serif}
+.fab-btn{width:48px;height:48px;border-radius:50%;background:#003CA5;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,60,165,.35);transition:transform .2s,box-shadow .2s}
+.fab-btn:hover{transform:scale(1.08);box-shadow:0 6px 20px rgba(0,60,165,.45)}
+.fab-panel{position:absolute;bottom:60px;left:0;width:580px;max-width:calc(100vw - 48px);background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);overflow:hidden;display:none}
+.fab-panel.open{display:block}
+.fab-panel-hdr{background:#003CA5;padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.fab-panel-title{font-size:13px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
+.fab-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;line-height:1}
+.fab-close:hover{background:rgba(255,255,255,.3)}
+.fab-body{padding:14px 16px;font-size:11px;line-height:1.7;color:#374151}
+.fab-cols{display:flex;gap:14px;margin-bottom:12px}
+.fab-col{flex:1;min-width:0}
+.fab-col-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;display:flex;align-items:center;gap:4px}
+.fab-col ul{padding-left:13px;margin:0;color:#6b7280}
+.fab-col ul li{margin-bottom:2px}
+.fab-col ul li strong{color:#374151}
+.fab-divider{height:1px;background:#f3f4f6;margin:10px 0}
+.fab-controls{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.fab-ctrl-label{font-size:11px;font-weight:600;color:#6b7280;margin-right:2px}
+.fab-btn-ctrl{padding:3px 10px;border-radius:6px;border:1px solid #d1d5db;background:#fff;font-size:11px;cursor:pointer;font-family:inherit;transition:background .15s;color:#374151}
+.fab-btn-ctrl:hover{background:#f3f4f6}
+.fab-btn-ctrl.info{border-color:#93c5fd;color:#1d4ed8}
+.fab-btn-ctrl.danger{border-color:#fca5a5;color:#dc2626}
+.fab-btn-ctrl.danger:hover{background:#fef2f2}
+.fab-clock{font-size:10px;color:#9ca3af;margin-left:auto}
+.fab-status{display:flex;align-items:center;gap:8px;background:#f9fafb;border-radius:7px;padding:7px 10px;margin-bottom:8px}
+.fab-status-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;white-space:nowrap}
+.fab-status-badge.stable{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0}
+.fab-status-badge.reshuffled{background:#faf5ff;color:#7c3aed;border:1px solid #e9d5ff}
+.fab-status-badge.restored{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0}
+.fab-status-badge.expired{background:#fffbeb;color:#b45309;border:1px solid #fde68a}
+.fab-status-detail{font-size:11px;color:#6b7280;flex:1}
+.fab-dots{display:flex;align-items:center;gap:5px;margin-bottom:10px}
+.fab-dot{width:9px;height:9px;border-radius:50%}
+.fab-dot.on{background:#003CA5}
+.fab-dot.off{background:#e5e7eb}
+.fab-dots-lbl{font-size:10px;color:#6b7280;margin-left:4px}
+.fab-log{max-height:100px;overflow-y:auto;background:#f9fafb;border-radius:6px;padding:6px 8px}
+.fab-log-empty{font-size:10px;color:#9ca3af;font-style:italic}
+.fab-log-row{display:flex;align-items:flex-start;gap:6px;padding:3px 0;border-bottom:1px solid #f3f4f6;font-size:10px}
+.fab-log-row:last-child{border-bottom:none}
+.fab-log-t{color:#9ca3af;white-space:nowrap;flex-shrink:0}
+.fab-log-badge{font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;white-space:nowrap;flex-shrink:0}
+.fab-log-badge.r{background:#faf5ff;color:#7c3aed}
+.fab-log-badge.s{background:#f0fdf4;color:#16a34a}
+.fab-log-txt{color:#374151;flex:1}
+.fab-dbg{background:#eff6ff;border-radius:6px;padding:6px 10px;font-size:10px;color:#1d4ed8;margin-bottom:8px;line-height:1.8}
 </style>
 </head>
 <body>
 
 <!-- TOAST CONTAINER -->
 <div class="toast-wrap" id="toastWrap"></div>
-
-<!-- ANN BAR -->
-<div class="ann-bar" id="annBar">
-  WeTrials Partners with GenomOncology to Accelerate Clinical Trial Access for CNS Cancer Patients
-  <a href="#">Read More</a>
-  <button class="x" onclick="this.parentElement.style.display='none'">×</button>
-</div>
 
 <!-- HEADER -->
 <div class="header">
@@ -326,82 +373,7 @@ body{font-family:'Noto Sans',system-ui,sans-serif;background:var(--gray-bg);colo
   <div class="main">
 
 
-    <!-- SESSION DEFINITION PANEL -->
-    <div class="sess-def" id="sessDefPanel">
-      <div class="sess-def-hdr">
-        <div class="sess-def-title">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22S22 17.52 22 12S17.52 2 12 2ZM13 17H11V11H13V17ZM13 9H11V7H13V9Z" fill="#1d4ed8"/></svg>
-          Session logic — 48h TTL
-        </div>
-        <button class="sess-toggle" onclick="toggleSessDef()">Hide</button>
-      </div>
-      <div id="sessDefBody" class="sess-def-body">
-        <div class="sess-def-col">
-          <div class="sess-def-col-title sdc-blue">📌 Default state</div>
-          <ul>
-            <li>First visit → <strong>5 featured studies</strong> randomly selected</li>
-            <li>Saved to <code>localStorage</code> with timestamp</li>
-            <li><strong>Any return within 48h</strong> → exact same selection</li>
-            <li>Refresh, close tab, reopen → <strong>same studies</strong></li>
-            <li>After <strong>48h</strong> → silent fresh selection on next visit</li>
-          </ul>
-        </div>
-        <div class="sess-def-col">
-          <div class="sess-def-col-title sdc-purple">🔍 Filtered state</div>
-          <ul>
-            <li><strong>All eligible featured shown</strong> — no cap</li>
-            <li>8 matching "GBM" → <strong>show all 8</strong></li>
-            <li>48h session preserved in storage, untouched</li>
-            <li>Clear filters → <strong>same locked selection returns</strong></li>
-          </ul>
-        </div>
-        <div class="sess-def-col">
-          <div class="sess-def-col-title" style="color:#b45309">↻ Reset only when</div>
-          <ul>
-            <li>48h TTL elapsed — <strong>silent, on next visit</strong></li>
-            <li>No notice shown, no disruption</li>
-          </ul>
-          <div class="sess-def-col-title" style="color:#16a34a;margin-top:8px">✓ Session survives</div>
-          <ul>
-            <li>Page refresh · tab close · tab reopen</li>
-            <li>Filter apply · filter clear</li>
-            <li>Pagination · sort · scroll</li>
-            <li>Opening a study card and returning</li>
-          </ul>
-        </div>
-      </div>
-      <div class="sess-controls">
-        <span class="sess-ctrl-label">Demo controls:</span>
-        <button class="sess-btn info" onclick="forceNewSession()">↻ New session</button>
-        <button class="sess-btn danger" onclick="simulateExpiry()">⏱ Simulate 48h expiry</button>
-        <button class="sess-btn" id="featToggleBtn" onclick="toggleFeatVisible()">★ Featured: On</button>
-        <div class="sess-clock" id="sessClock">—</div>
-      </div>
-    </div>
-
-        <!-- SESSION STATUS BAR -->
-    <div class="sess-bar" id="sessBar">
-      <div class="sess-status stable" id="sessStatus">● Stable</div>
-      <div class="sess-detail" id="sessDetail">Waiting for first interaction…</div>
-    </div>
-
-    <!-- DOTS COUNTER -->
-    <div class="dots-row" id="dotsRow"></div>
-
-    <!-- SESSION LOG -->
-    <div class="log-panel">
-      <div class="log-hdr">
-        <div class="log-title">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22S22 17.52 22 12S17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12S7.59 4 12 4S20 7.59 20 12S16.41 20 12 20ZM12.5 7H11V13L16.25 16.15L17 14.92L12.5 12.25V7Z" fill="#6b7280"/></svg>
-          Session event log
-        </div>
-        <button class="log-clr" onclick="clearLog()">Clear</button>
-      </div>
-      <div class="log-body" id="logBody"><div style="color:#9ca3af;font-style:italic;font-size:11px">No events yet — interact with search or filters</div></div>
-    </div>
-
     <!-- DEBUG -->
-    <div class="dbg" id="dbg"></div>
     <div class="res-info" id="resInfo"></div>
     <div class="card-list" id="cardList"></div>
 
@@ -612,19 +584,16 @@ function pushLog(type, trigger, detail) {
 function renderLog() {
   const el = document.getElementById('logBody');
   if (!sessionLog.length) {
-    el.innerHTML = '<div style="color:#9ca3af;font-style:italic;font-size:11px">No events yet</div>';
+    el.innerHTML = '<div class="fab-log-empty">No events yet — interact with search or filters</div>';
     return;
   }
-  const badge = { new: 'lbr', restored: 'lbs', expired: 'lbx', filtered: 'lbf', stable: 'lbs' };
-  const label = { new: '↻ New session', restored: '● Restored', expired: '⏱ Expired → new', filtered: '🔍 Filtered', stable: '● Stable' };
+  const label = { new: '↻ New', restored: '● Restored', expired: '⏱ Expired', filtered: '🔍 Filter', stable: '● Stable' };
+  const badgeCls = { new: 'r', expired: 'r', restored: 's', stable: 's', filtered: 's' };
   el.innerHTML = sessionLog.map(e => `
-    <div class="log-row">
-      <span class="log-t">${e.t}</span>
-      <div class="log-d ${e.type === 'new' || e.type === 'expired' ? 'r' : 's'}"></div>
-      <div class="log-txt">
-        <span class="lbadge ${badge[e.type] || 'lbs'}">${label[e.type] || e.type}</span>
-        &nbsp;<strong>${e.trigger}</strong>${e.detail ? ' — ' + e.detail : ''}
-      </div>
+    <div class="fab-log-row">
+      <span class="fab-log-t">${e.t}</span>
+      <span class="fab-log-badge ${badgeCls[e.type] || 's'}">${label[e.type] || e.type}</span>
+      <span class="fab-log-txt"><strong>${e.trigger}</strong>${e.detail ? ' — ' + e.detail : ''}</span>
     </div>`).join('');
 }
 
@@ -664,13 +633,14 @@ function dismissToast(id) {
 function renderDots(shown, pool, isDefState) {
   const MAX = 9;
   const wrap = document.getElementById('dotsRow');
+  if (!wrap) return;
   let h = '';
   for (let i = 0; i < MAX; i++)
-    h += `<div class="dot ${i < shown ? 'on' : 'off'}" title="${i < shown ? 'Featured slot ' + (i + 1) : 'Empty'}"></div>`;
+    h += `<div class="fab-dot ${i < shown ? 'on' : 'off'}" title="${i < shown ? 'Featured slot ' + (i + 1) : 'Empty'}"></div>`;
   const tag = isDefState
-    ? '<span style="background:#e0f2fe;color:#0369a1;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700;margin-left:4px">DEFAULT — 48h session lock</span>'
-    : '<span style="background:#faf5ff;color:#7c3aed;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700;margin-left:4px">FILTERED — all eligible shown</span>';
-  h += `<span class="dots-lbl">Showing <strong>${shown}</strong> of <strong>${pool}</strong> eligible featured ${tag}</span>`;
+    ? '<span class="fab-dots-lbl">Showing <strong>' + shown + '</strong> of <strong>' + pool + '</strong> featured · DEFAULT 48h lock</span>'
+    : '<span class="fab-dots-lbl">Showing <strong>' + shown + '</strong> of <strong>' + pool + '</strong> featured · FILTERED</span>';
+  h += tag;
   wrap.innerHTML = h;
 }
 
@@ -678,6 +648,7 @@ function renderDots(shown, pool, isDefState) {
 function updateSessBar(type, trigger, detail) {
   const bar = document.getElementById('sessStatus');
   const det = document.getElementById('sessDetail');
+  if (!bar || !det) return;
   const map = {
     new:      { cls: 'reshuffled', label: '↻ New session' },
     restored: { cls: 'restored',   label: '✓ Restored (within 48h)' },
@@ -686,13 +657,17 @@ function updateSessBar(type, trigger, detail) {
     filtered: { cls: 'reshuffled', label: '↻ Filtered' },
   };
   const cfg = map[type] || map.stable;
-  bar.className = 'sess-status ' + cfg.cls;
+  bar.className = 'fab-status-badge ' + cfg.cls;
   bar.textContent = cfg.label;
-  bar.style.animation = 'none'; bar.offsetHeight; bar.style.animation = '';
   det.innerHTML = `<strong>${trigger}</strong>${detail ? ' — ' + detail : ''}`;
 }
 
 // ── SESSION DEF TOGGLE ────────────────────────────────────────────────────────
+function toggleFab() {
+  const panel = document.getElementById('fabPanel');
+  panel.classList.toggle('open');
+}
+
 function toggleSessDef() {
   const body = document.getElementById('sessDefBody');
   const btn  = document.querySelector('.sess-toggle');
@@ -915,7 +890,8 @@ function applyFilters() {
   const modeTag = defState
     ? `<span style="background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:4px;font-weight:700">Default — ${curFeatured.length} locked for 48h</span>`
     : `<span style="background:#faf5ff;color:#7c3aed;padding:2px 8px;border-radius:4px;font-weight:700">Filtered — all ${featPool.length} matching featured shown</span>`;
-  document.getElementById('dbg').innerHTML = `${modeTag}${af.length ? ' &nbsp;|&nbsp; ' + af.join(' · ') : ''}`;
+  const dbgEl = document.getElementById('dbg');
+  if (dbgEl) dbgEl.innerHTML = `${modeTag}${af.length ? ' &nbsp;|&nbsp; ' + af.join(' · ') : ''}`;
   // Update toggle button appearance
   const ftBtn = document.getElementById('featToggleBtn');
   if (ftBtn) {
@@ -923,9 +899,9 @@ function applyFilters() {
     ftBtn.style.color = featVisible ? '#003CA5' : '#6b7280';
     ftBtn.style.borderColor = featVisible ? '#93c5fd' : '#d1d5db';
   }
-  document.getElementById('resInfo').innerHTML = `Showing <strong>1</strong> to <strong>${Math.min(displayTotal,10)}</strong> of <strong>${displayTotal} Studies</strong>`;
-  document.getElementById('pagInfo').innerHTML = `<strong>1</strong> to <strong>${Math.min(displayTotal,10)}</strong> of <strong>${displayTotal} Studies</strong>`;
-  document.getElementById('lastPg').textContent = Math.max(1, Math.ceil(displayTotal / 10));
+  const riEl = document.getElementById('resInfo'); if(riEl) riEl.innerHTML = `Showing <strong>1</strong> to <strong>${Math.min(displayTotal,10)}</strong> of <strong>${displayTotal} Studies</strong>`;
+  const piEl = document.getElementById('pagInfo'); if(piEl) piEl.innerHTML = `<strong>1</strong> to <strong>${Math.min(displayTotal,10)}</strong> of <strong>${displayTotal} Studies</strong>`;
+  const lpEl = document.getElementById('lastPg'); if(lpEl) lpEl.textContent = Math.max(1, Math.ceil(displayTotal / 10));
 
   // ── ROTATION NOTICE + TOGGLE BUTTON ────────────────────────────────────────
   // Hidden entirely when there are no featured studies to show
@@ -953,7 +929,7 @@ function applyFilters() {
   if (visibleFeatured.length && rest.length) html += `<div class="sep">All studies</div>`;
   rest.forEach(s => { html += cardHTML(s, false); });
   if (!displayTotal) html = `<div class="empty">No studies match your filters.<br><small style="margin-top:5px;display:block;color:#9ca3af">Try broadening your search.</small></div>`;
-  document.getElementById('cardList').innerHTML = html;
+  const clEl = document.getElementById('cardList'); if(clEl) clEl.innerHTML = html;
 }
 
 
@@ -988,5 +964,94 @@ setInterval(updateClock, 60000);
 applyFilters();
 
 </script>
+
+<!-- ── DEV FAB ───────────────────────────────────────────────────────────── -->
+<div class="fab-wrap" id="fabWrap">
+  <div class="fab-panel" id="fabPanel">
+    <div class="fab-panel-hdr">
+      <div class="fab-panel-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22S22 17.52 22 12S17.52 2 12 2ZM13 17H11V11H13V17ZM13 9H11V7H13V9Z" fill="white"/></svg>
+        Session logic — 48h TTL
+      </div>
+      <button class="fab-close" onclick="toggleFab()">×</button>
+    </div>
+    <div class="fab-body">
+
+      <!-- Status -->
+      <div class="fab-status">
+        <div class="fab-status-badge stable" id="sessStatus">● Stable</div>
+        <div class="fab-status-detail" id="sessDetail">Waiting for first interaction…</div>
+      </div>
+
+      <!-- Mode tag -->
+      <div class="fab-dbg" id="dbg"></div>
+
+      <!-- Dots -->
+      <div class="fab-dots" id="dotsRow"></div>
+
+      <!-- Cols -->
+      <div class="fab-cols">
+        <div class="fab-col">
+          <div class="fab-col-title" style="color:#0369a1">📌 Default state</div>
+          <ul>
+            <li>First visit → <strong>5 featured studies</strong> randomly selected</li>
+            <li>Saved to <code>localStorage</code> with timestamp</li>
+            <li><strong>Any return within 48h</strong> → exact same selection</li>
+            <li>Refresh, close tab, reopen → <strong>same studies</strong></li>
+            <li>After <strong>48h</strong> → silent fresh selection on next visit</li>
+          </ul>
+        </div>
+        <div class="fab-col">
+          <div class="fab-col-title" style="color:#7c3aed">🔍 Filtered state</div>
+          <ul>
+            <li><strong>All eligible featured shown</strong> — no cap</li>
+            <li>8 matching "GBM" → <strong>show all 8</strong></li>
+            <li>48h session preserved in storage, untouched</li>
+            <li>Clear filters → <strong>same locked selection returns</strong></li>
+          </ul>
+        </div>
+        <div class="fab-col">
+          <div class="fab-col-title" style="color:#b45309">↻ Reset only when</div>
+          <ul>
+            <li>48h TTL elapsed — <strong>silent, on next visit</strong></li>
+            <li>No notice shown, no disruption</li>
+          </ul>
+          <div class="fab-col-title" style="color:#16a34a;margin-top:8px">✓ Session survives</div>
+          <ul>
+            <li>Page refresh · tab close · tab reopen</li>
+            <li>Filter apply · filter clear</li>
+            <li>Pagination · sort · scroll</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="fab-divider"></div>
+
+      <!-- Log -->
+      <div style="font-size:10px;font-weight:700;color:#6b7280;margin-bottom:4px;display:flex;align-items:center;justify-content:space-between">
+        Session event log <button onclick="clearLog()" style="background:none;border:none;cursor:pointer;font-size:10px;color:#9ca3af;padding:0">Clear</button>
+      </div>
+      <div class="fab-log" id="logBody">
+        <div class="fab-log-empty">No events yet — interact with search or filters</div>
+      </div>
+
+      <div class="fab-divider"></div>
+
+      <!-- Controls -->
+      <div class="fab-controls">
+        <span class="fab-ctrl-label">Demo:</span>
+        <button class="fab-btn-ctrl info" onclick="forceNewSession()">↻ New session</button>
+        <button class="fab-btn-ctrl danger" onclick="simulateExpiry()">⏱ Simulate 48h expiry</button>
+        <button class="fab-btn-ctrl" id="featToggleBtn" onclick="toggleFeatVisible()">★ Featured: On</button>
+        <div class="fab-clock" id="sessClock">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAB trigger button -->
+  <button class="fab-btn" onclick="toggleFab()" title="Session dev tools">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22S22 17.52 22 12S17.52 2 12 2ZM13 17H11V11H13V17ZM13 9H11V7H13V9Z" fill="white"/></svg>
+  </button>
+</div>
 </body>
 </html>
