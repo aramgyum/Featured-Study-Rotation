@@ -1,0 +1,641 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   STUDYFINDER STYLES - Extracted from Figma Design
+   ════════════════════════════════════════════════════════════════════════════
+   
+   This CSS provides the visual styles from the Figma StudyFinder component.
+   Add these styles to your existing <style> tag in index.html
+   
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* Import Poppins Font - required for Figma design */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* ─── BASE & ROOT ─────────────────────────────────────────────────────────── */
+:root {
+  /* Primary Colors from Figma */
+  --sf-primary-blue: #3399d3;
+  --sf-light-blue: #c0dff1;
+  --sf-lighter-blue: #a1d0eb;
+  
+  /* Grayscale from Figma */
+  --sf-black: #09090b;
+  --sf-gray-dark: #52525c;
+  --sf-gray-text: #71717b;
+  --sf-gray-border: #d4d4d8;
+  --sf-gray-light: #e0e0e4;
+  --sf-gray-lighter: #ededef;
+  --sf-gray-bg: #f8f8f9;
+  --sf-gray-bg-light: #f9fafb;
+  --sf-white: #ffffff;
+  
+  /* Badge Colors */
+  --sf-green-bg: #e4f7f0;
+  --sf-green-text: #237050;
+  --sf-green-icon: #96ddc4;
+  --sf-purple-bg: #f1e6f1;
+  --sf-purple-text: #710577;
+  --sf-checkbox-unchecked: #9f9fa9;
+}
+
+/* ─── CONTAINER & LAYOUT ──────────────────────────────────────────────────── */
+.sf-container {
+  position: relative;
+  width: 1440px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: #ffffff;
+}
+
+/* Header Bar (Study Finder Title + Search) */
+.sf-header {
+  position: absolute;
+  left: 0;
+  top: 80px;
+  width: 1440px;
+  height: 112px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 80px;
+  box-sizing: border-box;
+}
+
+.sf-header-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: normal;
+  color: var(--sf-black);
+  white-space: nowrap;
+}
+
+/* Search Input */
+.sf-search-container {
+  width: 928px;
+  height: 56px;
+  position: relative;
+  border-radius: 30px;
+  border: 1px solid var(--sf-gray-border);
+  background: #ffffff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.sf-search-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 8px 11px 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.sf-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--sf-gray-text);
+  background: transparent;
+}
+
+.sf-search-input::placeholder {
+  color: var(--sf-gray-text);
+}
+
+.sf-search-button {
+  width: 40px;
+  height: 40px;
+  background: var(--sf-primary-blue);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.sf-search-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* ─── FILTER PANEL ─────────────────────────────────────────────────────────── */
+.sf-filter-panel {
+  position: absolute;
+  left: 80px;
+  top: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Filters Header */
+.sf-filters-header {
+  width: 320px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.sf-filters-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.sf-filters-title {
+  flex: 1;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--sf-black);
+}
+
+/* Filter Sections Container */
+.sf-filter-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Individual Filter Input */
+.sf-filter-input-wrapper {
+  width: 320px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sf-filter-label-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.sf-filter-label {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--sf-black);
+  white-space: nowrap;
+}
+
+.sf-info-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.sf-text-input {
+  width: 100%;
+  height: 44px;
+  background: #ffffff;
+  border: 1px solid var(--sf-gray-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  color: var(--sf-gray-text);
+}
+
+.sf-text-input::placeholder {
+  color: var(--sf-gray-text);
+}
+
+/* Collapsible Filter Section */
+.sf-filter-collapsible {
+  width: 320px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sf-filter-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0 8px;
+  width: 100%;
+}
+
+.sf-chevron-icon {
+  width: 24px;
+  height: 24px;
+  transform: rotate(180deg);
+  cursor: pointer;
+}
+
+/* Checkbox/Radio Options */
+.sf-options-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.sf-option-row {
+  width: 100%;
+  height: 44px;
+  background: #ffffff;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+
+.sf-option-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Checkbox Styling */
+.sf-checkbox {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sf-checkbox svg {
+  width: 100%;
+  height: 100%;
+}
+
+.sf-checkbox-path {
+  stroke: var(--sf-checkbox-unchecked);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+/* Radio Button Styling */
+.sf-radio {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sf-radio-outer {
+  position: absolute;
+  inset: 12.5%;
+}
+
+.sf-radio-outer circle {
+  stroke: var(--sf-primary-blue);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.sf-radio-inner {
+  position: absolute;
+  inset: 29.17%;
+}
+
+.sf-radio-inner circle {
+  fill: var(--sf-primary-blue);
+}
+
+/* Option Labels */
+.sf-option-label {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--sf-black);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Filter Action Buttons */
+.sf-filter-actions {
+  width: 320px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 16px 20px;
+}
+
+.sf-filter-buttons {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.sf-button-clear {
+  flex: 1;
+  height: 44px;
+  background: #ffffff;
+  border: 1px solid var(--sf-light-blue);
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.sf-button-clear-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--sf-lighter-blue);
+}
+
+.sf-button-apply {
+  flex: 1;
+  height: 44px;
+  background: var(--sf-light-blue);
+  border: none;
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.sf-button-apply-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+/* ─── STUDY CARDS ─────────────────────────────────────────────────────────── */
+.sf-study-card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 17px 18px;
+  box-sizing: border-box;
+}
+
+/* Badge Container */
+.sf-badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Status Badges */
+.sf-badge-recruiting {
+  height: 29px;
+  background: var(--sf-green-bg);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.sf-badge-recruiting-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--sf-green-text);
+  white-space: nowrap;
+}
+
+.sf-badge-observational {
+  height: 29px;
+  background: var(--sf-purple-bg);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.sf-badge-observational-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--sf-purple-text);
+  white-space: nowrap;
+}
+
+.sf-badge-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Card Title */
+.sf-card-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--sf-black);
+  margin: 10px 0 6px;
+}
+
+/* Age Row */
+.sf-age-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 9px;
+}
+
+.sf-users-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.sf-age-label {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--sf-gray-dark);
+  white-space: nowrap;
+}
+
+.sf-age-value {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--sf-black);
+  white-space: nowrap;
+}
+
+/* Condition Box */
+.sf-condition-box {
+  width: 100%;
+  height: 60px;
+  background: #ffffff;
+  border: 1px solid var(--sf-gray-lighter);
+  border-radius: 8px;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.sf-condition-label-section {
+  background: var(--sf-gray-bg);
+  border-right: 1px solid var(--sf-gray-lighter);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.sf-condition-label-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sf-heart-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.sf-condition-label-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--sf-gray-dark);
+  white-space: nowrap;
+}
+
+.sf-condition-divider {
+  width: 1px;
+  background: var(--sf-gray-lighter);
+}
+
+.sf-condition-tags-section {
+  flex: 1;
+  padding: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.sf-condition-tag {
+  height: 36px;
+  background: #ffffff;
+  border: 1px solid var(--sf-gray-light);
+  border-radius: 8px;
+  padding: 4px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sf-condition-tag-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--sf-black);
+  white-space: nowrap;
+}
+
+.sf-more-link {
+  height: 32px;
+  padding: 4px 8px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.sf-more-link-content {
+  display: flex;
+  align-items: center;
+}
+
+.sf-more-link-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--sf-black);
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+.sf-angle-down-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Card Footer with AI Badge and NCT */
+.sf-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.sf-ai-badge {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  position: relative;
+}
+
+.sf-ai-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.sf-ai-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--sf-gray-text);
+}
+
+.sf-nct-id {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--sf-gray-dark);
+}
+
+/* ─── UTILITY CLASSES ──────────────────────────────────────────────────────── */
+.sf-flex { display: flex; }
+.sf-flex-col { flex-direction: column; }
+.sf-items-center { align-items: center; }
+.sf-items-start { align-items: flex-start; }
+.sf-justify-between { justify-content: space-between; }
+.sf-justify-center { justify-content: center; }
+.sf-gap-4 { gap: 4px; }
+.sf-gap-6 { gap: 6px; }
+.sf-gap-8 { gap: 8px; }
+.sf-gap-10 { gap: 10px; }
+.sf-gap-12 { gap: 12px; }
+.sf-shrink-0 { flex-shrink: 0; }
+.sf-flex-1 { flex: 1; }
+.sf-relative { position: relative; }
+.sf-absolute { position: absolute; }
+.sf-w-full { width: 100%; }
+.sf-h-full { height: 100%; }
+
+/* ─── RESPONSIVE OVERRIDES (optional) ───────────────────────────────────────── */
+@media (max-width: 1440px) {
+  .sf-container,
+  .sf-header {
+    width: 100%;
+  }
+  
+  .sf-search-container {
+    max-width: 600px;
+  }
+}
