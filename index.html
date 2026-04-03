@@ -512,6 +512,177 @@ input,button,select,textarea{font-family:'Noto Sans',system-ui,sans-serif!import
 .btn-a:hover{background:#add3ea;}
 
 .main{padding-left:0;min-width:0;}
+
+
+/* === v9: unified typography + full-width white header background === */
+.header-wrapper{
+  width:100%;
+  background:#ffffff;
+  border-bottom:1px solid #e5e7eb;
+}
+.header{
+  background:transparent !important;
+  border-bottom:none !important;
+  max-width:1440px;
+  margin:0 auto;
+}
+
+/* 16px titles */
+.card-title{
+  font-size:16px !important;
+  line-height:1.4 !important;
+  font-weight:700 !important;
+  letter-spacing:-0.01em !important;
+  color:#1f2430 !important;
+  margin:0 0 8px !important;
+  display:block !important;
+  overflow:visible !important;
+  max-width:none !important;
+}
+
+/* 14px descriptions / inputs */
+.card-desc,
+.srch,
+.fi{
+  font-size:14px !important;
+  line-height:1.5 !important;
+  font-weight:400 !important;
+  color:#4b5563 !important;
+}
+
+/* unified 12px metadata */
+.ai-tag,
+.nct,
+.age-row,
+.age-lbl,
+.age-val,
+.cond-lbl,
+.cmore,
+.fs-title,
+.cr{
+  font-size:12px !important;
+  line-height:1.5 !important;
+  letter-spacing:0 !important;
+}
+
+/* label emphasis */
+.fs-title{
+  font-weight:600 !important;
+  color:#1f2430 !important;
+}
+.cr{
+  font-weight:500 !important;
+  color:#5a6070 !important;
+}
+.ai-tag,
+.nct,
+.age-row,
+.age-lbl,
+.age-val,
+.cond-lbl,
+.cmore{
+  font-weight:500 !important;
+  color:#5a6070 !important;
+}
+
+/* preserve title hierarchy in top areas */
+.fp-hdr{
+  font-size:16px !important;
+  font-weight:700 !important;
+  color:#1f2430 !important;
+}
+.sf-name{
+  color:#1f2430 !important;
+}
+
+
+
+/* === v10: prevent regular card titles from touching badges === */
+.card.normal .badges{
+  margin-bottom:14px !important;
+}
+.card.normal .card-title{
+  margin-top:0 !important;
+}
+.card.normal .card-desc{
+  margin-top:0 !important;
+}
+
+
+/* === v11: unified card structure for regular and featured cards === */
+.card{
+  padding:20px !important;
+  border-radius:12px !important;
+  background:#ffffff !important;
+  border:1px solid #e5e7eb !important;
+  box-shadow:none !important;
+}
+.card:hover{
+  border-color:#d4d4d8 !important;
+  box-shadow:none !important;
+}
+.card.featured-card{
+  border:2px solid #0b49b5 !important;
+}
+.card.featured-card:hover{
+  border-color:#0b49b5 !important;
+}
+.badges{
+  display:flex !important;
+  gap:8px !important;
+  margin-bottom:12px !important;
+  padding-right:96px !important;
+  align-items:center !important;
+}
+.card-title{
+  margin:0 0 8px !important;
+}
+.card-desc{
+  margin:0 0 10px !important;
+}
+.age-row{
+  margin:0 0 10px !important;
+}
+.cond-box{
+  margin-top:0 !important;
+}
+.card-foot{
+  margin-top:10px !important;
+}
+
+/* regular cards inherit same structure, just no contour/badge */
+.card.normal{
+  border:1px solid #e5e7eb !important;
+}
+
+/* featured badge kept only on featured cards */
+.card.normal .fp-badge{
+  display:none !important;
+}
+
+
+/* === v12: scale typography (titles +20%, filter labels +15%) === */
+
+/* Titles +20% */
+.card-title{
+  font-size:19px !important; /* ~16px -> 19px */
+  line-height:1.35 !important;
+}
+
+/* Filter labels +15% */
+.fs-title{
+  font-size:13.8px !important; /* ~12px -> ~13.8px */
+}
+
+.cr{
+  font-size:13.8px !important;
+}
+
+/* keep hierarchy clean */
+.card-desc{
+  font-size:14.5px !important;
+}
+
 </style>
 </head>
 <body>
@@ -520,6 +691,7 @@ input,button,select,textarea{font-family:'Noto Sans',system-ui,sans-serif!import
 <div class="toast-wrap" id="toastWrap"></div>
 
 <!-- HEADER -->
+<div class="header-wrapper">
 <div class="header">
   <div class="sf-pill">
     <div class="sf-pill-l">
@@ -537,6 +709,7 @@ input,button,select,textarea{font-family:'Noto Sans',system-ui,sans-serif!import
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M21.53 20.47L17.69 16.63C18.97 15.11 19.75 13.14 19.75 11C19.75 6.18 15.82 2.25 11 2.25C6.18 2.25 2.25 6.18 2.25 11C2.25 15.82 6.18 19.75 11 19.75C13.14 19.75 15.11 18.97 16.63 17.69L20.47 21.53C20.82 21.24 21.82 20.76 21.53 20.47ZM3.75 11C3.75 7 7 3.75 11 3.75C15 3.75 18.25 7 18.25 11C18.25 15 15 18.25 11 18.25C7 18.25 3.75 15 3.75 11Z" fill="#1d4ed8"/></svg>
     </button>
   </div>
+</div>
 </div>
 
 <!-- LAYOUT -->
