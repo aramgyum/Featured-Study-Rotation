@@ -764,6 +764,126 @@ input,button,select,textarea{font-family:'Noto Sans',system-ui,sans-serif!import
   .fab-panel{width:min(580px,calc(100vw - 32px));}
 }
 
+
+
+/* === v6: unify card proportions so featured and regular cards match === */
+.card.normal{
+  border:1px solid var(--sf-gray-lighter) !important;
+  border-radius:14px !important;
+  padding:16px 18px 14px !important;
+  box-shadow:none !important;
+}
+.card.normal:hover{
+  border-color:var(--sf-gray-border) !important;
+  box-shadow:none !important;
+}
+.card.normal .badges{
+  gap:10px !important;
+  padding-right:0 !important;
+  margin-bottom:10px !important;
+}
+.card.normal .badge{
+  min-height:30px !important;
+  padding:6px 10px !important;
+  border-radius:8px !important;
+  font-size:12px !important;
+  font-weight:600 !important;
+  gap:5px !important;
+}
+.card.normal .badge svg{
+  width:14px !important;
+  height:14px !important;
+}
+.card.normal .card-title{
+  font-size:15px !important;
+  line-height:1.35 !important;
+  font-weight:700 !important;
+  letter-spacing:-0.01em !important;
+  margin:0 0 8px !important;
+  max-width:none !important;
+  display:block !important;
+  overflow:visible !important;
+}
+.card.normal .card-desc{
+  display:block !important;
+  font-size:13px !important;
+  line-height:1.52 !important;
+  color:#5f6472 !important;
+  margin:0 0 10px !important;
+  max-width:100% !important;
+}
+.card.normal .age-row{
+  gap:5px !important;
+  margin:0 0 10px !important;
+  font-size:12px !important;
+  color:#5a6070 !important;
+}
+.card.normal .age-row svg{
+  width:14px !important;
+  height:14px !important;
+}
+.card.normal .age-lbl{
+  font-size:12px !important;
+  color:#5a6070 !important;
+}
+.card.normal .age-val{
+  font-size:12px !important;
+  font-weight:600 !important;
+  color:#1f2430 !important;
+}
+.card.normal .cond-box{
+  margin-top:0 !important;
+  border:1px solid #dfe3ea !important;
+  border-radius:12px !important;
+  min-height:56px !important;
+}
+.card.normal .cond-lbl{
+  min-width:142px !important;
+  padding:14px 16px !important;
+  background:#f8f8fb !important;
+  border-right:1px solid #e3e6ec !important;
+  font-size:12px !important;
+  color:#5a6070 !important;
+  gap:8px !important;
+}
+.card.normal .cond-lbl svg{
+  width:14px !important;
+  height:14px !important;
+}
+.card.normal .cond-tags{
+  padding:10px 14px !important;
+  gap:10px !important;
+  min-height:56px !important;
+}
+.card.normal .ctag{
+  min-height:32px !important;
+  padding:6px 14px !important;
+  border:1px solid #d8dde6 !important;
+  border-radius:10px !important;
+  font-size:12px !important;
+  font-weight:600 !important;
+}
+.card.normal .cmore{
+  min-height:32px !important;
+  padding:4px 4px !important;
+  font-size:12px !important;
+  font-weight:500 !important;
+  color:#2f3440 !important;
+}
+.card.normal .card-foot{
+  margin-top:10px !important;
+  align-items:center !important;
+}
+.card.normal .ai-tag{
+  font-size:12px !important;
+  color:#6b7280 !important;
+}
+.card.normal .nct{
+  font-size:12px !important;
+  color:#6b7280 !important;
+  font-weight:600 !important;
+}
+
 </style>
 </head>
 <body>
