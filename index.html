@@ -1323,7 +1323,7 @@ function applyFilters() {
   if (visibleFeatured.length > 0) {
     let toggleBtn = '';
     if (defState && hiddenCount > 0) {
-      toggleBtn = `<button class="feat-see-all" onclick="toggleFeatured()">See all ${featPool.length} featured studies</button>`;
+      toggleBtn = `<button class="feat-see-all" onclick="toggleFeatured()">View all featured studies (${featPool.length})</button>`;
     } else if (defState && featExpanded && featPool.length > curFeatured.length) {
       toggleBtn = `<button class="feat-see-all" onclick="toggleFeatured()">Show fewer</button>`;
     }
